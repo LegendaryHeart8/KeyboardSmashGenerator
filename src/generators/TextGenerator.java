@@ -1,6 +1,9 @@
 package generators;
 
+import java.util.Random;
+
 public abstract class TextGenerator {
+    protected Random random = new Random();
     protected StringBuilder generated = new StringBuilder();
     protected int lengthNew = 0; //length of new text that has just been generated
      public abstract void generateNew(int characters);

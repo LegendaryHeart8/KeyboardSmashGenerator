@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.Random;
 
 public class SpamGeneratorStats extends TextGeneratorChar{
-    private Random random;
+
     static final int LETTERS = 26;
     private int[][] frequencies = new int[LETTERS][LETTERS]; //frequencies[FROM][TO] = number of occurrences of a letter going from FROM to TO
     private int[] totalFrequencies = new int[LETTERS]; //number of occurrences of a letter
@@ -12,9 +12,6 @@ public class SpamGeneratorStats extends TextGeneratorChar{
     private int totalLetters = 0;//the total number of letters counted in frequencies
 
     final char DEFAULT_CHAR = 'a';
-    public SpamGeneratorStats(){
-        random = new Random();
-    }
     @Override
     protected char generateNewChar() {
         if(generated.length() == 0) return generateStartChar();

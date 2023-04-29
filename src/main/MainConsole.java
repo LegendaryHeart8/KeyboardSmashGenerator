@@ -6,11 +6,13 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Scanner;
 
+import generators.RandomGenerator;
 import generators.SpamGeneratorStats;
 
 public class MainConsole {
     public static void main(String[] args) {
         File spamData;
+        RandomGenerator RG = new RandomGenerator();
         SpamGeneratorStats SGS = new SpamGeneratorStats();
         try {
             spamData = getFileFromResource("Accumulated text spam data.txt");
