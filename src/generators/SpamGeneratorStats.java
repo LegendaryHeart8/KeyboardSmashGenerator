@@ -1,6 +1,7 @@
+package generators;
+
 import java.io.*;
 import java.util.Random;
-import java.util.Scanner;
 
 public class SpamGeneratorStats extends TextGeneratorChar{
     private Random random;
@@ -9,21 +10,34 @@ public class SpamGeneratorStats extends TextGeneratorChar{
     private int[] totalFrequencies = new int[LETTERS]; //number of occurrences of a letter
     private int[] totalTo = new int[LETTERS]; //number of times the letter was left
     private int totalLetters = 0;//the total number of letters counted in frequencies
+
+    final char DEFAULT_CHAR = 'a';
     public SpamGeneratorStats(){
         random = new Random();
     }
     @Override
     protected char generateNewChar() {
-        if(generated.length() == 0) generateStartChar();
-        return generateStartChar();
+        if(generated.length() == 0) return generateStartChar();
+        else return generateNextChar(generated.charAt(generated.length()-1));
     }
     private char generateStartChar(){
+        if(totalLetters == 0) return DEFAULT_CHAR;
         int randNum = random.nextInt(totalLetters);
         for(int i=0;i<LETTERS;i++){
             randNum -= totalFrequencies[i];
             if(randNum < 0) return indToLetter(i);
         }
-        return  indToLetter(LETTERS-1);
+        return  DEFAULT_CHAR;
+    }
+    private char generateNextChar(char pre){
+        int prePos = letterToInd(pre);
+        if(totalTo[prePos] == 0) return DEFAULT_CHAR;
+        int randNum = random.nextInt(totalTo[prePos]);
+        for(int i=0;i<LETTERS;i++){
+            randNum -= frequencies[prePos][i];
+            if(randNum<0) return indToLetter(i);
+        }
+        return DEFAULT_CHAR;
     }
     /**
      * Sets every entry in frequencies to zero
@@ -44,7 +58,7 @@ public class SpamGeneratorStats extends TextGeneratorChar{
         int nextCode =0;
         while((nextCode=bufferedReader.read()) != -1){
             if(letterToInd(nextCode) == -1) continue;
-            frequencies[letterToInd(prevCode)][letterToInd(nextCode)] += 1;
+            if(letterToInd(prevCode) != -1) frequencies[letterToInd(prevCode)][letterToInd(nextCode)] += 1;
             prevCode = nextCode;
         }
 

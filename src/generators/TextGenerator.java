@@ -1,3 +1,5 @@
+package generators;
+
 public abstract class TextGenerator {
     protected StringBuilder generated = new StringBuilder();
     protected int lengthNew = 0; //length of new text that has just been generated

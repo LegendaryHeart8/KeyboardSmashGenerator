@@ -1,15 +1,18 @@
+package main;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import generators.SpamGeneratorStats;
+
 public class MainConsole {
     public static void main(String[] args) {
         File spamData;
-        SpamGeneratorStats SGS;
+        SpamGeneratorStats SGS = new SpamGeneratorStats();
         try {
             spamData = getFileFromResource("Accumulated text spam data.txt");
-            SGS = new SpamGeneratorStats();
             SGS.setFrequencies(spamData);
         }
         catch (URISyntaxException e){
@@ -17,7 +20,9 @@ public class MainConsole {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        //generate text and output
+        SGS.generateNew(100);
+        System.out.println(SGS.getNewGenerated());
     }
     private static File getFileFromResource(String fileName) throws URISyntaxException {
 
